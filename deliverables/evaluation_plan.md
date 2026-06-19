@@ -13,8 +13,6 @@ These folds simulate real-world scenario where you only have past data to predic
 The leakage_blacklist removes features that would make the prediction too easy.
 
 
-## Stress tests
-
 ## Stress Test Summary
 
 ### Test 1: Noise Injection
