@@ -15,7 +15,7 @@ The leakage_blacklist removes features that would make the prediction too easy.
 
 ## Stress tests
 
-## 7. Stress Test Summary
+## Stress Test Summary
 
 ### Test 1: Noise Injection
 
