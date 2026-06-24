@@ -1,4 +1,4 @@
-player,team,year,group,actual,predicted,error,abs_error
+player,team,year,group,actual,predicted,residual,abs_error
 A'ja Wilson,LVA,2025,veteran,200000,214155.70162797708,14155.701627977076,14155.701627977076
 Napheesa Collier,MIN,2025,unknown,214284,200972.09919463706,-13311.900805362937,13311.900805362937
 Kelsey Mitchell,IND,2025,veteran,269244,213155.48861871936,-56088.51138128064,56088.51138128064
