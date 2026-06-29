@@ -74,20 +74,6 @@
     "residual_definition": "predicted - actual"
   },
   "residual_definition": "predicted - actual",
-  "input_files": {
-    "X_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/X_train_processed.csv",
-    "y_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/y_train.csv",
-    "X_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/X_test_2025_processed.csv",
-    "y_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/y_test_2025.csv",
-    "lookup_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/player_lookup_train.csv",
-    "lookup_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/player_lookup_test_2025.csv"
-  },
-  "output_files": {
-    "model_bundle": "/Users/nahyunlee/summer26-wnba-player-valuation/artifacts/final_model.joblib",
-    "metrics": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_metrics.csv",
-    "predictions": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_predictions.csv",
-    "metadata": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_model_metadata.json"
-  },
   "environment": {
     "python_version": "3.12.13",
     "platform": "macOS-26.3.1-arm64-arm-64bit",
