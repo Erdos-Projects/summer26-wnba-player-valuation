@@ -1,0 +1,99 @@
+{
+  "artifact_name": "final_model.joblib",
+  "model_type": "RandomForestRegressor",
+  "model_params": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": null,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 5,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 400,
+    "n_jobs": null,
+    "oob_score": false,
+    "random_state": 26,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "feature_names": [
+    "avail_rate",
+    "blk",
+    "fg",
+    "fg_per_g",
+    "fga",
+    "ft",
+    "fta",
+    "g",
+    "mp",
+    "pca1",
+    "pts",
+    "pts_rookie",
+    "pts_vet",
+    "pts_hardship",
+    "start_rate",
+    "team_min",
+    "tov",
+    "ws_rookie",
+    "ws_vet",
+    "ws_hardship",
+    "group_controlled",
+    "group_hardship",
+    "group_rookie",
+    "group_unknown",
+    "group_veteran"
+  ],
+  "target": "salary",
+  "split_info": {
+    "train_years": [
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "test_year": 2025,
+    "n_train": 742,
+    "n_test": 223
+  },
+  "metrics": {
+    "model": "RandomForestRegressor",
+    "train_years": "2021-2024",
+    "test_year": 2025,
+    "n_train": 742,
+    "n_test": 223,
+    "n_features": 25,
+    "RMSE": 41368.59784601421,
+    "MAE": 30376.251303988436,
+    "MAPE": 1.2870129849581213,
+    "R2": 0.6342031366014038,
+    "residual_definition": "predicted - actual"
+  },
+  "residual_definition": "predicted - actual",
+  "input_files": {
+    "X_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/X_train_processed.csv",
+    "y_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/y_train.csv",
+    "X_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/X_test_2025_processed.csv",
+    "y_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/y_test_2025.csv",
+    "lookup_train": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/player_lookup_train.csv",
+    "lookup_test": "/Users/nahyunlee/summer26-wnba-player-valuation/data/processed/player_lookup_test_2025.csv"
+  },
+  "output_files": {
+    "model_bundle": "/Users/nahyunlee/summer26-wnba-player-valuation/artifacts/final_model.joblib",
+    "metrics": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_metrics.csv",
+    "predictions": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_predictions.csv",
+    "metadata": "/Users/nahyunlee/summer26-wnba-player-valuation/results/final/final_model_metadata.json"
+  },
+  "environment": {
+    "python_version": "3.12.13",
+    "platform": "macOS-26.3.1-arm64-arm-64bit",
+    "pandas_version": "3.0.3",
+    "numpy_version": "2.4.6",
+    "sklearn_version": "1.8.0",
+    "joblib_version": "1.5.3"
+  }
+}
