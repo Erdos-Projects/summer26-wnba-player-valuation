@@ -76,7 +76,7 @@
   "residual_definition": "predicted - actual",
   "environment": {
     "python_version": "3.12.13",
-    "platform": "macOS-26.3.1-arm64-arm-64bit",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
     "pandas_version": "3.0.3",
     "numpy_version": "2.4.6",
     "sklearn_version": "1.8.0",
