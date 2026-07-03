@@ -224,6 +224,6 @@ The final prediction and metric outputs are saved under:
 
 - Add more contract-specific features, such as contract length, free agency status, draft position, and injury history.
 
-- Expand the team-level ROI analysis with richer roster and salary cap context.
+- Collect player-team split data for multi-team players. This would allow `TOT` players to be assigned to the team where they played the most games, improving team-level CPW analysis.
 
 
