@@ -162,16 +162,18 @@ The final results show that the model can estimate player salary, identify playe
 
 ## 5. Final Model Choice and Justification
 
-The final selected model is a tuned Random Forest regression model.
+The final selected model is a tuned Gradient Boosting regression model.
 
-During model tuning, we compared Random Forest and Gradient Boosting using only the 2021–2024 dataset in the training period. The 2025 holdout set was reserved for final testing. Models were selected using cross-validated RMSE, with RMSE treated as the primary model-selection metric.
+After filtering duplicate salary records so that each player keeps one primary salary entry, the final feature set was updated with four additional features: `pts_hardship`, `ws_hardship`, `ws_vet`, and `group_other`. Because the training data and feature set changed, the model tuning comparison was rerun.
 
-Random Forest was selected because it performed best within the tuning scope and fits the structure of the salary prediction problem. WNBA salary is unlikely to be explained by a purely linear relationship with box-score production alone. Salary may depend on player role, playing time, scoring production, contract group, team context, and nonlinear interactions among these variables. Random Forest provides the best balance between predictive performance, nonlinear modeling flexibility, interpretability through feature importance, and usefulness for both player-level fair market value estimation and team-level spending efficiency analysis.
+During model tuning, we compared Random Forest and Gradient Boosting using only the 2021–2024 training period. The 2025 holdout set was reserved for final testing. Models were selected using cross-validated RMSE, with RMSE treated as the primary model-selection metric.
+
+Gradient Boosting was selected because it performed slightly better than Random Forest under the RMSE-first tuning rule. This fits the structure of the salary prediction problem: WNBA salary is unlikely to be explained by a purely linear relationship with box-score production alone. Salary may depend on player role, playing time, scoring production, contract group, team context, and nonlinear interactions among these variables. Also, `model_comparison fixed.ipynb` also showed that Gradient Boosting had a smaller train-validation gap than Random Forest, suggesting less overfitting in this tuning setup.
 
 The model tuning and comparison details can be found in:
 
-- `notebooks/model_tuning.ipynb`
-- `notebooks/model_comparison.ipynb`
+- `notebooks/Deduplicated/model_tuning fixed.ipynb`
+- `notebooks/model_comparison fixed.ipynb`
 
 We also compared the final model against several baseline models:
 
