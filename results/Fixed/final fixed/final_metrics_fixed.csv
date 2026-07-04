@@ -1,0 +1,2 @@
+model,train_years,test_year,n_train,n_test,n_features,RMSE,MAE,MAPE,R2,residual_definition
+GradientBoostingRegressor,2021-2024,2025,633,182,26,39717.19788028826,30368.066571590378,0.6953093925391907,0.6311167118196808,predicted - actual
