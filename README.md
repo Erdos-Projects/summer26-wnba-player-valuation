@@ -4,10 +4,10 @@ Predicting what WNBA players should earn based on production. A 2026 Erdös Inst
 
 # Authors
 
-Elena Axinn
-Aklima Khanam
-Nahyun Lee
-Ling Le
+Elena Axinn  
+Aklima Khanam  
+Nahyun Lee  
+Ling Le  
 Tiana Johnson
 
 # Summary 
