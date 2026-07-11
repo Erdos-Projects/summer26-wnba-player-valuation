@@ -121,7 +121,7 @@ This team-level ROI metric shows which teams appear to be getting wins more chea
 
 The final results focus on player-level and team-level valuation outputs.
 
-At the player level, the model compares each player's actual salary with player's predicted fair market value (FMV). Players are classified as underpaid, fair, or overpaid using a ±15% valuation threshold based on `value_pct`.
+At the player level, the model compares each player's actual salary with player's predicted fair market value (FMV). Players are classified as underpaid, fair, or overpaid using a ±15% valuation threshold based on `value_pct = residual / actual`.
 
 The 2025 holdout set contains:
 
@@ -151,10 +151,38 @@ Top overvalued players by valuation gap include:
 | Julie Allemand | LAS | hardship | $85,000 | $19,240.64 | -77.4% |
 | Karlie Samuelson | MIN | veteran | $118,450 | $34,809.56 | -70.6% |
 
-At the team level, the model identifies teams whose actual spending per win is below or above the model-implied fair market benchmark. Connecticut shows the largest efficient-spending gap, while Chicago shows the largest inefficient-spending gap.
+We notice the followings:
 
-The feature importance results show that `start_rate` is the strongest driver in the final Random Forest model, followed by `pts_vet`, `fga`, `pca1`, and `group_hardship`, etc.
+- Players on hardship or rookie-scale contrats dominate the undervalued player list because there are some restrictions on their salaries.
+- Veterans dominate the overpaid player list because their on-court production has declined, while their current salaries still reflect their past performance.
 
+At the team level, the model identifies teams whose actual spending per win is below or above the model-implied fair market benchmark. 
+
+Most Efficient Spenders (Actual CPW Below FMV):
+
+| Team | Team Wins | Actual CPW | Predicted CPW | CPW Gap |
+|---|---:|---:|---:|---:|
+| CON | 11.0 | 101140.909091 | 125357.306017 | -24216.396927 |
+| GSV | 23.0 | 47492.652174 | 54309.989987 | -6817.337813 |
+| PHO | 27.0 | 52823.703704 | 57859.082635 | -5035.378931 |
+| WAS | 16.0 | 46664.562500 | 51447.959414 | -4783.396914 |
+| IND | 24.0 | 51681.416667 | 54868.734951 | -3187.318284 |
+| SEA | 23.0 | 52320.086957 | 53782.946572 | -1462.859615 |
+
+Least Efficient Spenders (Actual CPW Above FMV):
+
+| Team | Team Wins | Actual CPW | Predicted CPW | CPW Gap |
+|---|---:|---:|---:|---:|
+| CHI | 10.0 | 147319.700000 | 130368.153029 | 16951.546971 |
+| ATL | 30.0 | 49697.833333 | 40550.314035 | 9147.519298 |
+| DAL | 10.0 | 114788.500000 | 106331.663508 | 8456.836492 |
+| LAS | 21.0 | 62683.666667 | 54379.855001 | 8303.811666 |
+| LVA | 30.0 | 46728.766667 | 42285.464680 | 4443.301986 |
+| MIN | 34.0 | 42789.705882 | 38761.877901 | 4027.827982 |
+
+Connecticut spent efficiently but won very few games throughout the season; Las Vegas won big but overpaid to do so throughout the season.
+
+The feature importance results show that `start_rate` is the strongest driver in the final tunned Random Forest model, followed by `pts_vet`, `fga`, `pca1`, and `group_hardship`, etc.
 
 The final results show that the model can estimate player salary, identify player-level market (in)efficiencies, and convert those predictions into team-level spending efficiency thur CPW.
 
@@ -162,18 +190,16 @@ The final results show that the model can estimate player salary, identify playe
 
 ## 5. Final Model Choice and Justification
 
-The final selected model is a tuned Gradient Boosting regression model.
+The final selected model is a tuned Random Forest regression model.
 
-After filtering duplicate salary records so that each player keeps one primary salary entry, the final feature set was updated with four additional features: `pts_hardship`, `ws_hardship`, `ws_vet`, and `group_other`. Because the training data and feature set changed, the model tuning comparison was rerun.
+During model tuning, we compared Random Forest and Gradient Boosting using only the 2021–2024 dataset in the training period. The 2025 holdout set was reserved for final testing. Models were selected using cross-validated RMSE, with RMSE treated as the primary model-selection metric.
 
-During model tuning, we compared Random Forest and Gradient Boosting using only the 2021–2024 training period. The 2025 holdout set was reserved for final testing. Models were selected using cross-validated RMSE, with RMSE treated as the primary model-selection metric.
-
-Gradient Boosting was selected because it performed slightly better than Random Forest under the RMSE-first tuning rule. This fits the structure of the salary prediction problem: WNBA salary is unlikely to be explained by a purely linear relationship with box-score production alone. Salary may depend on player role, playing time, scoring production, contract group, team context, and nonlinear interactions among these variables. Also, `model_comparison fixed.ipynb` also showed that Gradient Boosting had a smaller train-validation gap than Random Forest, suggesting less overfitting in this tuning setup.
+Random Forest was selected because it performed best within the tuning scope and fits the structure of the salary prediction problem. WNBA salary is unlikely to be explained by a purely linear relationship with box-score production alone. Salary may depend on player role, playing time, scoring production, contract group, team context, and nonlinear interactions among these variables. Random Forest provides the best balance between predictive performance, nonlinear modeling flexibility, interpretability through feature importance, and usefulness for both player-level fair market value estimation and team-level spending efficiency analysis.
 
 The model tuning and comparison details can be found in:
 
-- `notebooks/Deduplicated/model_tuning fixed.ipynb`
-- `notebooks/model_comparison fixed.ipynb`
+- `notebooks/model_tuning.ipynb`
+- `notebooks/model_comparison.ipynb`
 
 We also compared the final model against several baseline models:
 
@@ -194,7 +220,7 @@ The lift analysis can be found in:
 
 - `notebooks/final_visuals.ipynb`
 
-The final production pipeline is implemented in:
+The final pipeline is implemented in:
 
 - `notebooks/final_pipeline.ipynb`
 
@@ -210,11 +236,11 @@ The final prediction and metric outputs are saved under:
 
 ## 6. Limitations
 
-- Salary depends on more than player performance. For instance, contract timing, veteran status, draft status, free agency, injuries, roster needs, salary cap rules, and team strategy may not be fully captured by the available features.
+- Salary depends on more than player performance. For instance, contract timing, veteran status, draft status, free agency, injuries, roster needs, salary cap rules, and team strategy may not be fully captured by the available features because the chosen dataset contains limited off-court information.
 
-- Hardship contracts are difficult to model because their salaries are often driven by contract rules or roster mechanisms rather than on-court performance alone, leads to much higher MAPE for the hardship group.
+- Hardship contracts are difficult to model because their salaries are often driven by contract rules or roster mechanisms rather than on-court performance alone, leads to much higher MAPE for the hardship group. Hence, the hardship contract are structurally unlearnable.
 
-- Missing contract-specific or context-specific variables may cause the model to classify some players as underpaid or overpaid even when their salaries are reasonable in context.
+- WNBA contract structure changes very qucik.
 
 - Players listed under `TOT` represent multi-team or aggregate season records. They are useful for player-level valuation but excluded from team-level spending analysis because they cannot be assigned to only one team.
 
@@ -222,10 +248,11 @@ The final prediction and metric outputs are saved under:
 
 ## 7. Next Steps
 
-- Add off-court value features, such as social media presence, sponsorship activity, and player marketability.
+- Add off-court value features, such as social media presence, and sponsorship activity etc.
 
 - Add more contract-specific features, such as contract length, free agency status, draft position, and injury history.
 
 - Collect player-team split data for multi-team players. This would allow `TOT` players to be assigned to the team where they played the most games, improving team-level CPW analysis.
 
+---
 
